@@ -156,7 +156,7 @@ def train(epoch):
         if loss_count == 100:
             print('Step {}/{}, CapsuleLoss: {}, CNNLoss: {}, ReconLoss: {}'
                   .format(i + 1, len(train_loader), a_loss_sum / loss_count,
-                          f_loss_sum / loss_count, r_loss_sum / loss_count))
+                          f_loss_sum / loss_count, r_loss_sum / loss_count), flush=True)
             loss_count = 0
             f_loss_sum = 0
             a_loss_sum = 0
@@ -189,17 +189,17 @@ def test(epoch, loader):
     np.set_printoptions(precision=4)
     correct_a = correct_a.item()
     print('Epoch:', epoch, 'Capsule', 'Accuracy:',
-          correct_a / len(test_dataset))
+          correct_a / len(test_dataset), flush=True)
 
     correct_f = correct_f.item()
-    print('Epoch:', epoch, 'Conv', 'Accuracy:', correct_f / len(test_dataset))
+    print('Epoch:', epoch, 'Conv', 'Accuracy:', correct_f / len(test_dataset), flush=True)
 
     return correct_f / len(test_dataset), correct_a / len(test_dataset)
 
 
 for epoch in range(1, 46):
     train(epoch)
-    print('test_accuracy')
+    print('test_accuracy', flush=True)
     f_test_acc, a_test_acc = test(epoch, test_rot_loader)
     # if epoch % 5 == 0:
     #    evaluate_poses(model, train_loader, test_loader, device)
