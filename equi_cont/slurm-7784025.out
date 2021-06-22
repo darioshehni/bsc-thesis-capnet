@@ -1,0 +1,36 @@
+start running the code
+device:  cuda
+Net(
+  (conv1): GroupConvLayer(1, 16)
+  (pool1): PoolingCapsuleLayer(1, 16)
+  (conv2): GroupConvLayer(16, 1)
+  (pool2): PoolingCapsuleLayer(16, 32)
+  (conv3): GroupConvLayer(32, 1)
+  (pool3): PoolingCapsuleLayer(32, 32)
+  (conv4): GroupConvLayer(32, 1)
+  (pool4): PoolingCapsuleLayer(32, 64)
+  (conv5): GroupConvLayer(64, 1)
+  (pool5): PoolingCapsuleLayer(64, 10)
+  (recon1): Linear(in_features=94, out_features=512, bias=True)
+  (recon2): Linear(in_features=512, out_features=1024, bias=True)
+  (recon3): Linear(in_features=1024, out_features=784, bias=True)
+)
+/home/dariosa/miniconda3/lib/python3.8/site-packages/torchvision/transforms/transforms.py:1200: UserWarning: Argument resample is deprecated and will be removed since v0.10.0. Please, use interpolation instead
+  warnings.warn(
+/home/dariosa/miniconda3/lib/python3.8/site-packages/torchvision/transforms/functional.py:935: UserWarning: Argument resample is deprecated and will be removed since v0.10.0. Please, use interpolation instead
+  warnings.warn(
+Step 100/1875, CapsuleLoss: 0.35988699078559877, CNNLoss: 2.302738375663757, ReconLoss: 115.24595161437988
+Step 200/1875, CapsuleLoss: 0.3601085916161537, CNNLoss: 2.2198614609241485, ReconLoss: 97.21320526123047
+Step 300/1875, CapsuleLoss: 0.35977193057537077, CNNLoss: 2.2003882610797882, ReconLoss: 95.48569519042968
+Step 400/1875, CapsuleLoss: 0.3601010200381279, CNNLoss: 2.1135078191757204, ReconLoss: 94.42096450805664
+Traceback (most recent call last):
+  File "mnist_cont.py", line 213, in <module>
+    train(epoch)
+  File "mnist_cont.py", line 160, in train
+    loss.backward()
+  File "/home/dariosa/miniconda3/lib/python3.8/site-packages/torch/tensor.py", line 245, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/dariosa/miniconda3/lib/python3.8/site-packages/torch/autograd/__init__.py", line 145, in backward
+    Variable._execution_engine.run_backward(
+RuntimeError: CUDA error: an illegal memory access was encountered
+finish runnign the code

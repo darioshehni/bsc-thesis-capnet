@@ -1,0 +1,6 @@
+start running the code
+  File "mnist_cont.py", line 159
+    print(loss.size())
+                     ^
+TabError: inconsistent use of tabs and spaces in indentation
+finish runnign the code
