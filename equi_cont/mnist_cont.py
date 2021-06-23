@@ -140,8 +140,9 @@ def train(epoch):
         angle = np.random.uniform(0, 2 * np.pi, size=(1,))[0]
         #img_batch = img_batch.squeeze(-1)
         img_batch_rot = T.functional.rotate(img_batch.squeeze(-1), angle, resample=2)
-        img_batch_rot = img_batch_rot.unsqueeze(-1)
+        # img_batch_rot = img_batch_rot.unsqueeze(-1)
         f_out, a_out, pose_out_1, img_out = model(img_batch.to(device))
+        # print(pose_out_1)
         angle_1 = torch.arctan(pose_out_1)
 
         _, _, pose_out_2, _ = model(img_batch_rot.to(device))
@@ -153,13 +154,13 @@ def train(epoch):
         recon_loss = (
             torch.abs(img_out.view(-1, 28, 28) - img_batch_28.view(-1, 28, 28))) \
             .sum(dim=2).sum(dim=1).mean(dim=0)
-        print(a_loss , f_loss , 0.01 , recon_loss , contrastive_loss)
+        print(a_loss, f_loss, 0.01, recon_loss, contrastive_loss)
 
         loss = a_loss + f_loss + 0.01 * recon_loss + contrastive_loss
         # loss = a_loss + f_loss + contrastive_loss
 
         print(loss)
-	
+
         loss.backward()
 
         a_loss_sum += a_loss.item()
