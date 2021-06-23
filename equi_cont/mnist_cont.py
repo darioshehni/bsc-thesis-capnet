@@ -137,23 +137,22 @@ def train(epoch):
         img_batch = img_batch.squeeze(1).unsqueeze(-1)
         optimizer.zero_grad()
 
-        angle = np.random.uniform(0, 2 * np.pi, size=(1,))[0]
+        angle = np.random.uniform(0, 2 * np.pi, size=(1,))[0].float()
         #img_batch = img_batch.squeeze(-1)
-        img_batch_rot = T.functional.rotate(img_batch.squeeze(-1), angle, resample=2)
-        # img_batch_rot = img_batch_rot.unsqueeze(-1)
-        f_out, a_out, pose_out_1, img_out = model(img_batch.to(device))
-        # print(pose_out_1)
-        angle_1 = torch.arctan(pose_out_1)
+        img_batch_rot = T.functional.rotate(img_batch.squeeze(-1).float(), angle, resample=2)
+        img_batch_rot = img_batch_rot.unsqueeze(-1).float()
+        f_out, a_out, pose_out_1, img_out = model(img_batch.to(device).float())
+        angle_1 = torch.arctan(pose_out_1).float()
 
-        _, _, pose_out_2, _ = model(img_batch_rot.to(device))
-        angle_2 = torch.arctan(pose_out_2)
-        contrastive_loss = ((angle_2 - angle_1) - angle).pow(2).mean()
+        _, _, pose_out_2, _ = model(img_batch_rot.to(device).float())
+        angle_2 = torch.arctan(pose_out_2).float()
+        contrastive_loss = ((angle_2 - angle_1) - angle).pow(2).mean().float()
 
         a_loss = spread_loss(a_out, target, epoch, device=device)
         f_loss = F.nll_loss(f_out, target)
         recon_loss = (
             torch.abs(img_out.view(-1, 28, 28) - img_batch_28.view(-1, 28, 28))) \
-            .sum(dim=2).sum(dim=1).mean(dim=0)
+            .sum(dim=2).sum(dim=1).mean(dim=0).float()
         print(a_loss, f_loss, 0.01, recon_loss, contrastive_loss)
 
         loss = a_loss + f_loss + 0.01 * recon_loss + contrastive_loss
