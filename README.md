@@ -16,3 +16,8 @@ between the output image and the translated image is backpropagated through
 the network. By adding the translation to the output XY, from which the image is
 reconstructed, the network is trained such that the output XY must represent the
 pose of the input image.
+
+
+# Results
+
+![alt text](https://www.researchgate.net/profile/Mensah-Patrick-2/publication/336067692/figure/fig2/AS:809496385425420@1570010386756/Auto-encoder-Capsule-structure-Hinton-et-al-2011.png)
