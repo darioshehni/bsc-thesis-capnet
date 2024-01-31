@@ -1,4 +1,4 @@
-# thesis-capnet
+# Capsule Networks
 In this project, we aim to demonstrate that by using capsule
 networks it is possible to build an extractor of the pose from an image without
 any supervision.
